@@ -1,0 +1,43 @@
+---
+  - hosts: web
+    sudo: yes
+    tasks:
+    - name: deployer | main.yml | install project dependencies
+      apt: name={{ item.package }}={{ item.version }} state=present update_cache=yes cache_valid_time=3600
+      with_items: flask_application.dependencies
+
+    - name: deployer | main.yml | get release timestamp
+      command: date +%Y%m%d%H%M%S
+      register: timestamp
+
+    - name: deployer | main.yml | get release directory
+      command: echo "{{ flask_application.target.path }}/releases/{{ timestamp.stdout }}"
+      register: release_path
+
+    - name: deployer | main.yml | create release directory
+      file: state=directory path={{ release_path.stdout }}
+
+    - name: deployer | main.yml | get release venv directory
+      command: echo "{{ flask_application.target.venvs_path }}/releases/{{ timestamp.stdout }}"
+      register: release_venv_path
+
+    - name: deployer | main.yml | create release venv directory
+      file: state=directory path={{ release_venv_path.stdout }}
+
+    - name: deployer | main.yml | install virtualenv
+      command: /usr/bin/virtualenv --no-site-packages --distribute {{ release_venv_path.stdout }} creates={{ release_venv_path.stdout }}/bin/activate
+
+    - name: deployer | main.yml | copy src folder to server
+      copy: src={{ flask_application.src.path }} dest={{ release_path.stdout }}
+
+    - name: deployer | main.yml | copy requirements to server
+      copy: src={{ flask_application.src.requirements_path }} dest={{ release_path.stdout }}
+
+    - name: deployer | main.yml | install requirements.txt
+      pip: requirements="{{ release_path.stdout }}/requirements.txt" virtualenv="{{ release_venv_path.stdout }}" state=present
+
+    - name: deployer | main.yml | update current venv symlink
+      file: state=link path="{{ flask_application.target.venvs_path}}/current" src={{ release_venv_path.stdout }}
+
+    - name: deployer | main.yml | update current application symlink
+      file: state=link path="{{ flask_application.target.path}}/current" src={{ release_path.stdout }}

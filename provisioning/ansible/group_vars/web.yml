@@ -1,0 +1,19 @@
+nginx:
+  package: nginx
+  version: 1.8.0-1~trusty
+  sites_conf:
+  conf:
+    path: nginx.conf.j2
+    vars:
+      user: www-data
+      max_clients: 8096
+      access_log: /var/log/nginx/access.log
+      error_log: /var/log/nginx/error.log
+
+uwsgi:
+  package: uwsgi
+  version: 2.0.10
+
+supervisor:
+  package: supervisor
+  version: 3.0b2
