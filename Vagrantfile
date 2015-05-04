@@ -18,21 +18,50 @@ Vagrant.configure(2) do |config|
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "provisioning/ansible/deploy.yml"
     ansible.extra_vars = {
+      nginx: {
+        sites_conf: [
+          {
+            src_path: ENV['FLASK_SKELETON_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.nginx.conf.j2',
+            target_name: 'flask_skeleton.conf'
+          }
+        ]
+      },
+      uwsgi: {
+        apps_conf: [
+          {
+            src_path: ENV['FLASK_SKELETON_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.uwsgi.ini.j2',
+            target_name: 'flask_skeleton.ini'
+          }
+        ]
+      },
+      supervisor: {
+        conf: {
+          path: 'supervisord.conf.j2'
+        },
+        apps_conf: [
+          {
+            src_path: ENV['FLASK_SKELETON_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.supervisor.conf.j2',
+            target_name: 'flask_skeleton.conf'
+          }
+        ]
+      },
       flask_application: {
-        user: "www-data",
-        group: "www-data",
+        user: 'www-data',
+        group: 'www-data',
         src: {
-          path: "/Users/ryankanno/Projects/github/me/flask-skeleton/flask_skeleton",
-          requirements_path: "/Users/ryankanno/Projects/github/me/flask-skeleton/requirements.txt"
+          path: ENV['FLASK_SKELETON_PATH'] + '/flask_skeleton',
+          requirements_path: ENV['FLASK_SKELETON_PATH'] + '/requirements.txt'
         },
         target: {
-          path: "/var/www/flask_applications/flask_skeleton/app",
-          venvs_path: "/var/www/flask_applications/flask_skeleton/venvs",
+          path: '/var/www/flask_applications/flask_skeleton/app',
+          venvs_path: '/var/www/flask_applications/flask_skeleton/venvs',
+          static_path: '/var/www/flask_applications/flask_skeleton/app/current/flask_skeleton/apps/static'
         },
         dependencies: [
-          { package: "python2.7", version: "2.7.6-8" },
-          { package: "python-pip", version: "1.5.4-1ubuntu1" },
-          { package: "python-virtualenv", version: "1.11.4-1" }
+          { package: 'python2.7', version: '2.7.6-8' },
+          { package: 'python-pip', version: '1.5.4-1ubuntu1' },
+          { package: 'python-virtualenv', version: '1.11.4-1' },
+          { package: 'python-dev', version: '2.7.5-5ubuntu3' },
         ]
       }
     }
