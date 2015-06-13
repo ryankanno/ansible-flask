@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
       nginx: {
         sites_conf: [
           {
-            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.nginx.conf.j2',
+            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/ansible/templates/flask_skeleton.nginx.conf.j2',
             target_name: 'flask_skeleton.conf'
           }
         ]
@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
       uwsgi: {
         apps_conf: [
           {
-            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.uwsgi.ini.j2',
+            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/ansible/templates/flask_skeleton.uwsgi.ini.j2',
             target_name: 'flask_skeleton.ini'
           }
         ]
@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
         },
         apps_conf: [
           {
-            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/roles/deployer/templates/flask_skeleton.supervisor.conf.j2',
+            src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/ansible/templates/flask_skeleton.supervisor.conf.j2',
             target_name: 'flask_skeleton.conf'
           }
         ]
