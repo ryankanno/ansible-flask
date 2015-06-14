@@ -16,10 +16,10 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 50060, auto_correct: true
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "provisioning/ansible/deploy.yml"
+    ansible.playbook = "provisioning/ansible/site.yml"
     ansible.extra_vars = {
       nginx: {
-        sites_conf: [
+        vhosts_conf: [
           {
             src_path: ENV['FLASK_APPLICATION_PATH'] + '/provisioning/ansible/templates/flask_skeleton.nginx.conf.j2',
             target_name: 'flask_skeleton.conf'
