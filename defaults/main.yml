@@ -1,6 +1,5 @@
 nginx:
   package: nginx
-  version: 1.8.0-1~trusty
   sites_conf:
   conf:
     path: nginx.conf.j2
@@ -12,8 +11,6 @@ nginx:
 
 uwsgi:
   package: uwsgi
-  version: 2.0.10
 
 supervisor:
   package: supervisor
-  version: 3.0b2

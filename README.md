@@ -1,47 +1,36 @@
-# ansible-nginx-uwsgi-supervisor
+Ansible nginx-uwsgi-supervisor
+==============================
 
-This is (going to be) a role to deploy a nginx - uwsgi - supervisor application. To see how it
-works, the example below requires a uwsgi application to deploy. Luckily for
-you, you could take a clone of [flask-skeleton](https://github.com/ryankanno/flask-skeleton).
-Once you see how it works, you should be able to use it to deploy any supervisor controlled uwsgi application.
+This role is to setup an nginx-uwsgi-supervisor application.  Currently,
+this role houses roles from [https://github.com/ryankanno/ansible-roles](https://github.com/ryankanno/ansible-roles), but
+at some point down the road, there may be additional tasks added to it.  The
+goal for this role is to make said infrastructure less magical to setup and install.
 
-## Install
+Dependencies
+------------
 
-* `pip install -r requirements.txt`
-* clone of [https://github.com/ryankanno/flask-skeleton](https://github.com/ryankanno/flask-skeleton)
+  * [ansible 1.9+](https://github.com/ansible/ansible)
+  * [nginx](https://github.com/ryankanno/ansible-roles/tree/master/nginx)
+  * [uwsgi](https://github.com/ryankanno/ansible-roles/tree/master/uwsgi)
+  * [supervisor](https://github.com/ryankanno/ansible-roles/tree/master/supervisor)
 
-### Vagrant
+This role is ideally designed to work against a modern Ubuntu / Debian system. It's
+only been tested against 14.04 because some of the role dependencies haven't
+been updated with instructions for various OSes.
 
-To test the role w/ Vagrant, run the following command:
+Usage
+-----
 
-* `FLASK_APPLICATION_PATH=/path/to/clone/of/flask_skeleton vagrant up`
+* clone [https://github.com/ryankanno/ansible-roles](https://github.com/ryankanno/ansible-roles).
+* create an ansible.cfg file that has a modified roles_path pointing to where
+  you checked out ansible-roles to as well as this role.
 
-To provision the server, make sure the following is set in the Vagrantfile:
+Author
+------
 
-`ansible.playbook = "provisioning/ansible/site.yml"`
+Ryan Kanno
 
-To deploy new versions of the code, make sure the following is set in the
-Vagrantfile:
+License
+-------
 
-`ansible.playbook = "provisioning/ansible/deploy.yml"`
-
-After things are deployed, you'll need to execute the following:
-
-* `vagrant ssh`
-* `sudo supervisord -c /etc/supervisor/supervisord.conf`
-
-## Running
-
-To see the fruits of your labor, you should be able to execute the following:
-
-`curl http://localhost:50060` or `open http://localhost:50060`
-
-## Tips
-
-If you ever receive a Bad Gateway error after either curling or opening a
-browser, you'll want to make sure that supervisor is started within the Vagrant
-instance.
-
-If you curl/open the site and there aren't any styles, make sure to go into the
-[flask-skeleton](https://github.com/ryankanno/flask-skeleton) clone and run the
-following: `bower install`. This will bring down all the css assets.
+MIT
