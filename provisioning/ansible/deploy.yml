@@ -6,6 +6,12 @@
       apt: name={{ item.package }}={{ item.version }} state=present update_cache=yes cache_valid_time=3600
       with_items: flask_application.dependencies
 
+    - name: deployer| deploy.yml | create application directory
+      file: state=directory path={{ flask_application.target.path }} owner={{ flask_application.user }} group={{ flask_application.group }}
+
+    - name: deployer | deploy.yml | create virtualenvs directory
+      file: state=directory path={{ flask_application.target.venvs_path }} owner={{ flask_application.user }} group={{ flask_application.group }}
+
     - name: deployer | deploy.yml | get release timestamp
       command: date +%Y%m%d%H%M%S
       register: timestamp

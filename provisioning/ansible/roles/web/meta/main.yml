@@ -1,5 +1,0 @@
----
-  dependencies:
-    - { role: nginx }
-    - { role: uwsgi }
-    - { role: supervisor }

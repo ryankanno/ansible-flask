@@ -1,7 +1,0 @@
----
-  - name: web | configure_application.yml | create application directory
-    file: state=directory path={{ flask_application.target.path }} owner={{ flask_application.user }} group={{ flask_application.group }}
-
-  - name: web | configure_application.yml | create virtualenvs directory
-    file: state=directory path={{ flask_application.target.venvs_path }} owner={{ flask_application.user }} group={{ flask_application.group }}
-
