@@ -63,6 +63,11 @@ Vagrant.configure(2) do |config|
           { package: 'python-virtualenv', version: '1.11.4-1' },
           { package: 'python-dev', version: '2.7.5-5ubuntu3' },
         ]
+      },
+      deploy: {
+        supervisor: {
+          group: 'flask_skeleton:'
+        }
       }
     }
     ansible.inventory_path = "provisioning/ansible/ansible_hosts"

@@ -17,7 +17,3 @@ uwsgi:
 supervisor:
   package: supervisor
   version: 3.0b2
-
-deploy:
-  supervisor:
-    group: 'flask_skeleton:'
