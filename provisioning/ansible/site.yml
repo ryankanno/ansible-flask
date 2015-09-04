@@ -1,2 +1,13 @@
 ---
-  - include: web.yml
+  - hosts: web
+    sudo: yes
+    roles:
+      - web
+
+  - include: deploy.yml
+
+  - hosts: web
+    sudo: yes
+    tasks:
+      - name: site | site.yml | restart application
+        supervisorctl: name={{ deploy.supervisor.group }} state=restarted config=/etc/supervisor/supervisord.conf
