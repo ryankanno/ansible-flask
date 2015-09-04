@@ -59,14 +59,13 @@ Vagrant.configure(2) do |config|
         },
         dependencies: [
           { package: 'python2.7', version: '2.7.6-8' },
-          { package: 'python-pip', version: '1.5.4-1ubuntu1' },
+          { package: 'python-pip', version: '1.5.4-1ubuntu3' },
           { package: 'python-virtualenv', version: '1.11.4-1' },
           { package: 'python-dev', version: '2.7.5-5ubuntu3' },
         ]
       }
     }
     ansible.inventory_path = "provisioning/ansible/ansible_hosts"
-    # ansible.verbose = 'vvvv'
     ansible.limit = 'web'
   end
 
