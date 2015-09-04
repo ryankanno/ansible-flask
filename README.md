@@ -1,9 +1,9 @@
-# ansible-flask
+# ansible-nginx-uwsgi-supervisor
 
-This is a role to deploy a nginx - uwsgi - flask application. To see how it
-works, the example below requires a clone of [flask-skeleton](https://github.com/ryankanno/flask-skeleton).
-With that said, once you see how it works, you should be able to use it to
-deploy any flask application.
+This is a role to deploy a nginx - uwsgi - supervisor application. To see how it
+works, the example below requires a uwsgi application to deploy. Luckily for
+you, you could take a clone of [flask-skeleton](https://github.com/ryankanno/flask-skeleton).
+Once you see how it works, you should be able to use it to deploy any supervisor controlled uwsgi application.
 
 ## Install
 
